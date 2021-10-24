@@ -3,6 +3,6 @@ const app = express();
 
 app.use(express.static('./dist/joe-smack-angular'));
 app.get('/*', (req, res) =>
-    res.sendFile('index.html', {root: 'dist/joe-smack-angular/'}),
+    res.sendFile('./dist/joe-smack-angular/index.html'),
 );
 app.listen(process.env.PORT || 8080);
