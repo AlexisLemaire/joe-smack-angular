@@ -1,0 +1,18 @@
+<div class="RC-Item">
+    <h1 class="h3 mb-3 font-weight-normal">{{ recette?.title }}</h1>
+
+    <a [routerLink]="'/recette-update/'+recette?._id"><button class="RC-Btn">Mettre à jour la recette</button></a> <br />
+    <a [routerLink]="'/recette-delete/'+recette?._id"><button class="RC-Btn">Supprimer la recette</button></a> <br /><br />
+    <img [src]="'https://joe-smack-api.herokuapp.com/img/'+recette?.imgName" /> <br /><br />
+
+    <div class="RC-Body">  
+        <strong> Type: </strong> {{ recette?.type }} <br />
+        <strong> Prix: </strong> {{ recette?.prix }} <br />
+        <strong> Nombre de personnes: </strong> {{ recette?.nbPersonnes }} <br />
+        <strong> Temps de préparation: </strong> {{ recette?.prepDuration }} <br />
+        <strong> Ingrédients: </strong> {{ recette?.ingredients }} <br /><br/>
+
+        <strong> Recette: </strong>
+        <div [innerHTML]="recette?.text"></div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+<div class="RC-List" *ngFor="let recette of recettes">
+    <a [routerLink]="'/recette/'+recette?._id"> <button> {{ recette?.title }} </button> </a>
+    <img [src]="'https://joe-smack-api.herokuapp.com/img/'+recette?.imgName" />
+</div>
