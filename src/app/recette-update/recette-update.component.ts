@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -10,41 +11,40 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RecetteUpdateComponent implements OnInit {
   form!: FormGroup;
-  response?: { error?: string, success?: string };
-  responseUpload?: { error?: string, success?: string };
   file!: any;
   selectedRecette!: {
-    title?: string,
-    type?: string,
-    prix?: number,
-    prepDuration?: number,
-    nbPersonnes?: number,
-    ingredients?: number,
-    text?: string,
-    imgName?: string
+    title: string,
+    type: string,
+    prix: number,
+    prepDuration: number,
+    nbPersonnes: number,
+    ingredients: string,
+    text: string,
+    imgName: string
   };
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private thisRoute: ActivatedRoute) { 
+  constructor(private fb: FormBuilder, private http: HttpClient, private thisRoute: ActivatedRoute, private snackbar: MatSnackBar) { 
+    this.selectedRecette = { title: "", type: "", prix: 0, prepDuration: 0, nbPersonnes: 0, ingredients: "", text: "", imgName: "" };
     this.buildForm();
   }
 
   ngOnInit(): void {
     this.http
     .get("https://joe-smack-api.herokuapp.com/Recettes/SelectOne/"+this.thisRoute.snapshot.paramMap.get("id"))
-    .subscribe( (res: any) => (this.selectedRecette = res, console.log(res), this.buildForm()) );
+    .subscribe( (res: any) => (this.selectedRecette = res, this.buildForm()) );
   }
 
   buildForm() {
     this.form = this.fb.group({
       secretKey: ['', Validators.required],
-      title: [this.selectedRecette?.title, Validators.required],
-      type: [this.selectedRecette?.type, Validators.required],
-      prix: [this.selectedRecette?.prix, Validators.required],
-      prepDuration: [this.selectedRecette?.prepDuration, Validators.required],
-      nbPersonnes: [this.selectedRecette?.nbPersonnes, Validators.required],
-      ingredients: [this.selectedRecette?.ingredients, Validators.required],
+      title: [this.selectedRecette.title, Validators.required],
+      type: [this.selectedRecette.type, Validators.required],
+      prix: [this.selectedRecette.prix, Validators.required],
+      prepDuration: [this.selectedRecette.prepDuration, Validators.required],
+      nbPersonnes: [this.selectedRecette.nbPersonnes, Validators.required],
+      ingredients: [this.selectedRecette.ingredients, Validators.required],
       img: [''],
-      text: [this.selectedRecette?.text],
+      text: [this.selectedRecette.text],
     });
   }
 
@@ -60,11 +60,10 @@ export class RecetteUpdateComponent implements OnInit {
     await formData.append('file', this.file);
 
     await this.http
-    .post("https://joe-smack-api.herokuapp.com/Recettes/UploadImg", formData)
-    .subscribe( (res: any) => (this.responseUpload = res), (err) => console.log(err));
+    .post("https://joe-smack-api.herokuapp.com/Recettes/UploadImg", formData);
 
     await this.http
     .put("https://joe-smack-api.herokuapp.com/Recettes/UpdateOne/"+this.thisRoute.snapshot.paramMap.get("id"), this.form.value)
-    .subscribe( (res: any) => (this.response = res, console.log(res)) )
+    .subscribe( (res: any) => res.error ? this.snackbar.open(res.error, "Close") : this.snackbar.open("La recette a bien été modifiée", "Close") )
   }
 }

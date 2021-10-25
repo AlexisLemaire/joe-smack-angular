@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -10,9 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RecetteDeleteComponent implements OnInit {
   form!: FormGroup;
-  response?: { error?: string, success?: string };
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private thisRoute: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private thisRoute: ActivatedRoute, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -23,6 +23,6 @@ export class RecetteDeleteComponent implements OnInit {
   submit() {
     this.http
     .delete(`https://joe-smack-api.herokuapp.com/Recettes/DeleteOne/${this.thisRoute.snapshot.paramMap.get("id")}/${this.form.value.secretKey}`)
-    .subscribe ( (res: any) => this.response = res)
+    .subscribe ( (res: any) => res.error ? this.snackbar.open(res.error, "Close") : this.snackbar.open("La recette a bien été supprimée", "Close"))
   }
 }

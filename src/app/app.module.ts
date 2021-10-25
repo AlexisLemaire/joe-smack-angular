@@ -12,6 +12,8 @@ import { RecetteUpdateComponent } from './recette-update/recette-update.componen
 import { RecetteDeleteComponent } from './recette-delete/recette-delete.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

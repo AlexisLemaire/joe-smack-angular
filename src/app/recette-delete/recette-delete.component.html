@@ -3,7 +3,4 @@
     <input type="text" formControlName="secretKey" class="formControl" /> <br /><br />
 
     <button type="submit" [disabled]="!form.valid">Supprimer</button>
-
-    <div *ngIf="response && response?.error">{{ response?.error }}</div>
-    <div *ngIf="response && !response?.error"> La recette a bien été supprimée </div>
 </form>

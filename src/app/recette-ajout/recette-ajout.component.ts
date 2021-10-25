@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-recette-ajout',
@@ -9,11 +10,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RecetteAjoutComponent implements OnInit {
   form!: FormGroup;
-  response?: { error?: string, success?: string };
-  responseUpload?: { error?: string, success?: string };
   file!: any;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -40,12 +39,11 @@ export class RecetteAjoutComponent implements OnInit {
     let formData = new FormData();
 		await formData.append('file', this.file);
 
-		await this.http
-    .post("https://joe-smack-api.herokuapp.com/Recettes/UploadImg", formData)
-    .subscribe( (res: any) => (this.responseUpload = res), (err) => console.log(err));
+		this.http
+    .post("https://joe-smack-api.herokuapp.com/Recettes/UploadImg", formData);
 
-    await this.http
+    this.http
     .post("https://joe-smack-api.herokuapp.com/Recettes/Create", this.form.value)
-    .subscribe( (res: any) => (this.response = res, console.log(res)) )
+    .subscribe( (res: any) => res.error ? this.snackbar.open(res.error, "Close") : this.snackbar.open("La recette a bien été ajoutée", "Close") )
   }
 }
