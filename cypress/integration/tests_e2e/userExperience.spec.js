@@ -33,7 +33,7 @@ describe("userExperience", () => {
 
     it('should fill ajout recette form', () => {
         cy.get("select").select("plat");
-        cy.get("input").eq(0).type("FakeKey"); 
+        cy.get("input").eq(0).type("FakeKey");
         cy.get("input").eq(1).type("FakeTitle");
         cy.get("input").eq(2).type(0);
         cy.get("input").eq(3).type(0);
