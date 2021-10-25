@@ -2,14 +2,13 @@
 
 describe("userExperience", () => { 
 	it("should visit Home Page", () => {
-		cy.visit("http://localhost:4200");
+		cy.visit("https://joe-smack-angular.herokuapp.com/");
         cy.get("main").should("have.css","background-image",'url("https://i.ibb.co/LnDRNsm/aliments.jpg")');
 	});
 
     it("should visit list of entrees page", () => {
         cy.get("nav a").eq(1).click();
-        cy.get("nav a").eq(2).click();
-        cy.get("nav a").eq(1).click();
+        cy.reload();
         cy.get(".RC-List");
         cy.get("main").should("have.css","background-image",'url("https://i.ibb.co/SmX65RN/entree.jpg")');
     });
