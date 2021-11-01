@@ -1,4 +1,9 @@
 <form [formGroup]="form" (submit)="submit()">
+    <h1 class="h3 mb-3 font-weight-normal">Modifier une recette : {{ selectedRecette.title }}</h1>
+	<strong>
+		Vous pouvez modifier la recette selectionnée via cette page. La recette ne sera modifiée que si vous possedez la bonne clef secrète.
+	</strong> <br /><br />
+
     SecretKey: 
     <input type="text" formControlName="secretKey" class="form-control" /> <br />
 

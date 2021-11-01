@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RecetteDeleteComponent implements OnInit {
   form!: FormGroup;
+  recette: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private thisRoute: ActivatedRoute, private snackbar: MatSnackBar) { }
 
@@ -18,6 +19,10 @@ export class RecetteDeleteComponent implements OnInit {
     this.form = this.fb.group({
       secretKey: ['', Validators.required],
     })
+
+    this.http
+    .get(`https://joe-smack-api.herokuapp.com/Recettes/SelectOne/${this.thisRoute.snapshot.paramMap.get("id")}`)
+    .subscribe ( (res: any) => this.recette = res)
   }
 
   submit() {

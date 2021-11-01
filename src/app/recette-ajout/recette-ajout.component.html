@@ -1,4 +1,9 @@
 <form [formGroup]="form" (submit)="submit()">
+    <h1 class="h3 mb-3 font-weight-normal">Ajouter une recette</h1>
+	<strong>
+		Vous pouvez ajouter une nouvelle recette via cette page. La recette ne sera ajoutée que si vous possedez la bonne clef secrète.
+	</strong> <br /><br />
+    
     SecretKey: 
     <input type="text" formControlName="secretKey" class="form-control" /> <br />
 
