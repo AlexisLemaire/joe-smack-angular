@@ -31,3 +31,10 @@ form button:hover {
 form input:hover, form input:focus {
     box-shadow: inset 1px 1px 5px greenyellow;
 }
+
+
+@media screen and (max-width: 960px) {
+    form {
+        padding: 6%;
+    }
+}
