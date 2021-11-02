@@ -6,31 +6,22 @@ describe("userExperience", () => {
         cy.get("main").should("have.css","background-image",'url("https://i.ibb.co/LnDRNsm/aliments.jpg")');
 	});
 
-    it("should visit list of entrees page", () => {
-        cy.get("nav a").eq(1).click();
-        cy.reload();
+    it("should visit list of entrees, plats & patisseries pages", () => {
+        cy.get("nav a").contains("Entree").click();
         cy.get(".RC-List");
+        cy.reload();
         cy.get("main").should("have.css","background-image",'url("https://i.ibb.co/SmX65RN/entree.jpg")');
-    });
-
-    it("should visit list of plats page", () => {
-        cy.get("nav a").eq(2).click();
+        cy.get("nav a").contains("Plat").click();
         cy.get(".RC-List");
         cy.get("main").should("have.css","background-image",'url("https://i.ibb.co/nfRxZL9/plat.jpg")');
-    });
-
-    it("should visit list of patisseries page", () => {
-        cy.get("nav a").eq(3).click();
+        cy.get("nav a").contains("Patisserie").click();
         cy.get(".RC-List");
         cy.get("main").should("have.css","background-image",'url("https://i.ibb.co/qW7StB9/patisserie.jpg")');
     });
 
-    it("should visit ajout recette page", () => {
+    it("should visit ajout recette page & fill the form", () => {
         cy.get("nav a").eq(5).click();
         cy.get("form");
-    });
-
-    it('should fill ajout recette form', () => {
         cy.get("select").select("plat");
         cy.get("input").eq(0).type("FakeKey");
         cy.get("input").eq(1).type("FakeTitle");
